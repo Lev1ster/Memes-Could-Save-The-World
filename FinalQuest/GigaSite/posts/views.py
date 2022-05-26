@@ -20,3 +20,12 @@ class PostCreate(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(id_user=self.request.user)
+
+class PostView(generics.GenericAPIView, mixins.ListModelMixin):
+    queryset = serializers.PostSerializer
+    permission_class = [IsAuthenticated]
+    paginator = UserPostsResultsPagination
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = Post.objects.none()
+        

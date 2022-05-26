@@ -43,7 +43,7 @@ class UserCreateOrListView(mixins.ListModelMixin,
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
-        sorting = request.GET.get('sorting', 'from_max')
+        sorting = request.GET.get('sorting')
         serializer = self.get_serializer(queryset, many=True)
         data = self._sorted_serializer_data(serializer.data, sorting)
         return Response(data)
